@@ -1,5 +1,7 @@
-package com.miqt.tlchat.upremove;
+package com.miqt.upremove;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -10,12 +12,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import com.miqt.upremove.R;
+
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     HorizontalScrollView hSrollview;
     LinearLayout layout;
     private float fristy;
+    int[] imgs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +28,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         hSrollview = (HorizontalScrollView) findViewById(R.id.hSrollview);
         layout = (LinearLayout) findViewById(R.id.layout);
-
+        imgs = new int[]{
+                R.drawable.pic_1,
+                R.drawable.pic_2,
+                R.drawable.pic_3,
+                R.drawable.pic_4
+        };
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         final int height = hSrollview.getHeight();
-        for (int i = 0; i < 10; i++) {
+        BitmapFactory.Options option = new BitmapFactory.Options();
+        option.inSampleSize = 20;
+        for (int i = 0; i < imgs.length; i++) {
             final ScrollView img = (ScrollView) getLayoutInflater().inflate(R.layout.up_item,
                     layout, false);
             img.setOnTouchListener(new View.OnTouchListener() {
@@ -65,10 +77,11 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             });
-            ImageView imgs = (ImageView) img.findViewById(R.id.img);
-            ViewGroup.LayoutParams pm = imgs.getLayoutParams();
+            ImageView imageView = (ImageView) img.findViewById(R.id.img);
+            ViewGroup.LayoutParams pm = imageView.getLayoutParams();
             pm.height = height;
-            imgs.setImageResource(R.mipmap.ic_launcher);
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), imgs[i], option);
+            imageView.setImageBitmap(bm);
             layout.addView(img);
         }
     }

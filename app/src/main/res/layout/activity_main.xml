@@ -9,7 +9,7 @@
     <HorizontalScrollView
         android:id="@+id/hSrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="400dp"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:overScrollMode="never"
